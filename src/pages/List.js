@@ -1,19 +1,45 @@
+import React, {useEffect, useState} from "react";
+import {ListItemGroup} from "../components/Books";
 import styled from "styled-components";
-import Books from "../components/Books";
 
-const List = () => {
+const BookList = () => {
+	const [data, setData] = useState([])
+
+	// data test
+	const fetchBackgroundImage = () => {
+		return Promise.resolve([
+			{ title: '책제목1', value: 'book1', thumb_url: '/img/sample.jpg', summary: '임시글임시글임시글', like: 0 },
+			{ title: '책제목2', value: 'book2', thumb_url: '/img/sample.jpg', summary: '임시글2임시글2임시글', like: 2 },
+			{ title: '책제목3', value: 'book3', thumb_url: '/img/sample.jpg', summary: '임시글임시333글임시글', like: 55 },
+		])
+	}
+
+	useEffect(() => {
+		const fetch = async () => {
+			const backgroundImages = await fetchBackgroundImage()
+			setData(backgroundImages)
+		}
+
+		fetch()
+	}, [])
+
 	return (
-		<BookList>
+		<ListWrapper>
 			<button>&lt;</button>
 			<p>전체 (<span>20</span>)</p>
 			<div className="list">
-				<Books/>
+				<ListItemGroup data={data} />
 			</div>
-		</BookList>
-	);
-};
+		</ListWrapper>
+	)
+}
 
-let BookList = styled.div`
+export default BookList
+
+
+
+/* STYLE */
+let ListWrapper = styled.div`
 	min-height: 100vh;
   background-color: var(--yellow);
 	
@@ -35,5 +61,3 @@ let BookList = styled.div`
 		background-color: #fff;
 	}
 `
-
-export default List;

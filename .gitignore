@@ -8,3 +8,6 @@
 
 # project files
 /.idea
+
+# test
+/src/sample

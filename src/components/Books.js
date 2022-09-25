@@ -1,32 +1,48 @@
-import styled from 'styled-components';
+import React from 'react'
+import styled from "styled-components";
 
-const Books = () => {
+// View Container
+export const ListItem = ({data}) => {
 
 	return (
-		<>
-			{
-				[1,2,3].map(function(item, i){
-					return(
-						<Book>
-							<div className="img-box">
-								<img src={process.env.PUBLIC_URL + '/img/sample.jpg'} alt="책이미지"/>
-							</div>
-							<div className="info-box">
-								<p>제목 <span>책 제목</span></p>
-								<p>내용 <span>최신 글 또는 좋아요 제일 많은 글 1개</span></p>
-							</div>
-							<div className="like-box">
-								😍 <span>34</span>
-							</div>
-						</Book>
-					)
-				})
-			}
-		</>
+		<Book>
+			<div className="img-box">
+				<img src={process.env.PUBLIC_URL + data.thumb_url} alt="책 이미지"/>
+			</div>
+			<div className="info-box">
+				<p>제목 <span>{data.title}</span></p>
+				<p>내용 <span>{data.summary}</span></p>
+			</div>
+			<div className="like-box">
+				😍 <span>{data.like}</span>
+			</div>
+		</Book>
+	)
 
-	);
-};
+}
 
+// Data Container
+export const ListItemGroup = ({data}) => {
+
+	return (
+		<div>
+			<div>
+				{data &&
+					data.map((data, i) => (
+						<ListItem
+							key={`book_item_${i}`}
+							data={data}
+						/>
+					))}
+			</div>
+		</div>
+	)
+
+}
+
+
+
+/* STYLE */
 let Book = styled.div`
   display: flex;
 	align-items: center;
@@ -78,5 +94,3 @@ let Book = styled.div`
 		span{}
 	}
 `
-
-export default Books;
