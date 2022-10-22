@@ -6,18 +6,51 @@ const BookList = () => {
 	const [data, setData] = useState([])
 
 	// data test
-	const fetchBackgroundImage = () => {
+	const fetchBookList = () => {
 		return Promise.resolve([
-			{ title: '책제목1', value: 'book1', thumb_url: '/img/sample.jpg', summary: '임시글임시글임시글', like: 0 },
-			{ title: '책제목2', value: 'book2', thumb_url: '/img/sample.jpg', summary: '임시글2임시글2임시글', like: 2 },
-			{ title: '책제목3', value: 'book3', thumb_url: '/img/sample.jpg', summary: '임시글임시333글임시글', like: 55 },
+			{
+				"id": 1,
+				"title": "어린왕자",
+				"image": "/img/sample.jpg",
+				"sentences": [
+					{
+						"id": 1,
+						"content": "너를 4시에 만난다면 나는 3시부터 행복할거야. 너를 4시에 만난다면 나는 3시부터 행복할거야. 너를 4시에 만난다면 나는 3시부터 행복할거야. 너를 4시에 만난다면 나는 3시부터 행복할거야. 너를 4시에 만난다면 나는 3시부터 행복할거야. 너를 4시에 만난다면 나는 3시부터 행복할거야. 너를 4시에 만난다면 나는 3시부터 행복할거야. 너를 4시에 만난다면 나는 3시부터 행복할거야. 너를 4시에 만난다면 나는 3시부터 행복할거야. 너를 4시에 만난다면 나는 3시부터 행복할거야. 너를 4시에 만난다면 나는 3시부터 행복할거야. 너를 4시에 만난다면 나는 3시부터 행복할거야.",
+						"like": 2
+					},
+					{
+						"id": 2,
+						"content": "너를 4시에 만난다면 나는 3시부터 행복할거야!",
+						"like": 4
+					}
+				],
+				"likes": 6
+			},
+			{
+				"id": 2,
+				"title": "11분",
+				"image": "/img/sample.jpg",
+				"sentences": [
+					{
+						"id": 1,
+						"content": "그녀는 마치 갓 태어난 것처럼 살아갈 의지가 자신에게 있다는 것을, 따라서 어느 누구의 부재도 아쉬워할 필요가 없다는 것을 깨달았다. ",
+						"like": 5
+					},
+					{
+						"id": 2,
+						"content": "진정한 사랑을 찾으려면, 내가 했던 보잘 것 없는 사랑들과 먼제 결별해야 할 것이다.",
+						"like": 7
+					}
+				],
+				"likes": 12
+			}
 		])
 	}
 
 	useEffect(() => {
 		const fetch = async () => {
-			const backgroundImages = await fetchBackgroundImage()
-			setData(backgroundImages)
+			const bookList = await fetchBookList()
+			setData(bookList)
 		}
 
 		fetch()
@@ -26,7 +59,7 @@ const BookList = () => {
 	return (
 		<ListWrapper>
 			<button>&lt;</button>
-			<p>전체 (<span>20</span>)</p>
+			<p>전체 (<span>{data.length}</span>)</p>
 			<div className="list">
 				<ListItemGroup data={data} />
 			</div>
@@ -56,7 +89,7 @@ let ListWrapper = styled.div`
 	}
 	
 	.list{
-		padding: 24px 0;
+		padding: 24px;
 		margin-top: 24px;
 		background-color: #fff;
 	}

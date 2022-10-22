@@ -5,16 +5,16 @@ import styled from "styled-components";
 export const ListItem = ({data}) => {
 
 	return (
-		<Book>
+		<Book href={'/books/1'}>
 			<div className="img-box">
-				<img src={process.env.PUBLIC_URL + data.thumb_url} alt="책 이미지"/>
+				<img src={process.env.PUBLIC_URL + data.image} alt="책 이미지"/>
 			</div>
 			<div className="info-box">
-				<p>제목 <span>{data.title}</span></p>
-				<p>내용 <span>{data.summary}</span></p>
+				<p className="title">{data.title}</p>
+				<p className="desc">{data.sentences[0].content}</p>
 			</div>
 			<div className="like-box">
-				😍 <span>{data.like}</span>
+				😍 <span>{data.likes}</span>
 			</div>
 		</Book>
 	)
@@ -26,15 +26,13 @@ export const ListItemGroup = ({data}) => {
 
 	return (
 		<div>
-			<div>
-				{data &&
-					data.map((data, i) => (
-						<ListItem
-							key={`book_item_${i}`}
-							data={data}
-						/>
-					))}
-			</div>
+			{data &&
+				data.map((data, i) => (
+					<ListItem
+						key={`book_item_${i}`}
+						data={data}
+					/>
+				))}
 		</div>
 	)
 
@@ -43,7 +41,7 @@ export const ListItemGroup = ({data}) => {
 
 
 /* STYLE */
-let Book = styled.div`
+let Book = styled.a`
   display: flex;
 	align-items: center;
 	
@@ -63,9 +61,9 @@ let Book = styled.div`
 		
 		img{
       display: block;
-			max-width: 100%;
-			max-height: 100%;
-			margin: 0 auto;
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
 		}
 	}
 	
@@ -76,6 +74,7 @@ let Book = styled.div`
 		p{
 			font-size: 14px;
 			color: #555;
+			line-height: 1.3;
 			
 			&:not(:nth-of-type(1)){
 				margin-top: 8px;
@@ -85,11 +84,25 @@ let Book = styled.div`
 				color: #111;
 			}
 		}
+		
+		.title{
+			font-size: 18px;
+			font-weight: 600;
+		}
+		
+		.desc{
+      overflow: hidden;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
+		}
 	}
 	
 	.like-box{
 		width: 80px;
     text-align: center;
+    padding: 24px 0;
+    cursor: pointer;
 		
 		span{}
 	}
