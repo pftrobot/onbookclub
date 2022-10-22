@@ -1,11 +1,11 @@
 import React, {useEffect, useState} from "react";
-import {ListItemGroup} from "../components/Books";
 import styled from "styled-components";
 import {useParams} from "react-router-dom";
+import {ItemSentencesGroup} from "../components/Sentences";
 
 const BookDetail = () => {
-	const [data, setData] = useState([])
-	const {id} = useParams()
+	const [bookList, setBookList] = useState([])
+	const {currentId} = useParams()
 
 	// data test
 	const fetchBookList = () => {
@@ -52,21 +52,21 @@ const BookDetail = () => {
 	useEffect(() => {
 		const fetch = async () => {
 			const bookList = await fetchBookList()
-			setData(bookList)
+			const book = bookList.find((x) => x.id === parseInt(currentId))
+			setBookList(book)
 		}
 
 		fetch()
 	}, [])
 
 	return (
-		<ListWrapper>
-			<button>&lt;</button>
-			<p>전체 (<span>20</span>)</p>
-			<p>ID :  <span>{id}</span></p>
-			<div className="list">
-				<ListItemGroup data={data} />
+		<DetailWrapper>
+			<div className="title-area">
+				<p className="title">{bookList.title}</p>
+				<img src={process.env.PUBLIC_URL + bookList.image} alt="책 이미지"/>
 			</div>
-		</ListWrapper>
+			<ItemSentencesGroup data={bookList.sentences}/>
+		</DetailWrapper>
 	)
 }
 
@@ -75,25 +75,32 @@ export default BookDetail
 
 
 /* STYLE */
-let ListWrapper = styled.div`
+let DetailWrapper = styled.div`
 	min-height: 100vh;
   background-color: var(--yellow);
 	
-	button{
-    display: block;
-		font-size: 32px;
-    font-weight: bold;
-		color: #fff;
-		padding: 18px;
-	}
-	
-	p{
-		padding: 0 18px;
-	}
-	
-	.list{
-		padding: 24px 0;
-		margin-top: 24px;
-		background-color: #fff;
+	.title-area{
+    overflow: hidden;
+    position: relative;
+		height: 300px;
+		
+		.title{
+      position: relative;
+      font-size: 36px;
+      font-weight: 600;
+      text-align: center;
+      margin: 48px 0;
+      z-index: 9;
+		}
+		
+		img{
+      position: absolute;
+			top: 50%;
+      display: block;
+			width: 100%;
+			object-fit: cover;
+			z-index: 0;
+			transform: translateY(-50%);
+		}
 	}
 `
