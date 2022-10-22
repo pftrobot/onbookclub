@@ -5,7 +5,7 @@ import styled from "styled-components";
 export const ListItem = ({data}) => {
 
 	return (
-		<Book href={'/books/1'}>
+		<Book href={'/books/'+data.id}>
 			<div className="img-box">
 				<img src={process.env.PUBLIC_URL + data.image} alt="책 이미지"/>
 			</div>

@@ -1,9 +1,11 @@
 import React, {useEffect, useState} from "react";
 import {ListItemGroup} from "../components/Books";
 import styled from "styled-components";
+import {useParams} from "react-router-dom";
 
 const BookDetail = () => {
 	const [data, setData] = useState([])
+	const {id} = useParams()
 
 	// data test
 	const fetchBookList = () => {
@@ -60,6 +62,7 @@ const BookDetail = () => {
 		<ListWrapper>
 			<button>&lt;</button>
 			<p>전체 (<span>20</span>)</p>
+			<p>ID :  <span>{id}</span></p>
 			<div className="list">
 				<ListItemGroup data={data} />
 			</div>
